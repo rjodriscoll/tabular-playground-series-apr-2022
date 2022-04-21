@@ -23,17 +23,13 @@ def split_train_data(train, labels, train_perc = 0.9):
     length_y = len(labels)
     train_size_y = int(length_y * train_perc)
     X_train, X_test = train[0:train_size], train[train_size:length]
-    y_train, y_test = labels['state'][0:train_size_y], labels['state'][train_size_y:length_y]
+    y_train, y_test = labels[0:train_size_y], labels[train_size_y:length_y]
 
     return X_train, X_test, y_train, y_test
 
-def scale_and_as_array(train, features, test, X_train, X_test,y_train, y_test):
-    scaler = StandardScaler()
-    scaler.fit(train[features])
-    X_train = scaler.transform(X_train)
-    X_test = scaler.transform(X_test)
-    test[features] = scaler.transform(test[features])
-    y_train = np.array(y_train)
-    y_test = np.array(y_test)
-
-    return test, X_train, X_test, y_train, y_test 
+def scale_and_as_array(data, features, scaler, scale_data = False):
+    data = data.copy() # this is to prevent pandas copy warning
+    if scale_data:
+        data[features] = scaler.transform(data[features])
+    data_prepped = np.array(data[features])
+    return data_prepped
