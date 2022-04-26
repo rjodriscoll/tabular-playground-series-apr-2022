@@ -69,7 +69,8 @@ def train_model(model_in, test_pred_mode = False, n_folds=5):
         auc = roc_auc_score(y_val, model.predict(X_val).squeeze())
         print(f"The val auc for fold {fold}, {model_in.name} is {auc}")
 
-        plot_model(history, model, fold)
+        if not test_pred_mode:
+            plot_model(history, model, fold)
 
         if test_pred_mode:
             store.append(model.predict(test).squeeze())
