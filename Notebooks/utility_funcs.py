@@ -3,12 +3,8 @@ import os
 import numpy as np
 from sklearn.preprocessing import StandardScaler
 
-def get_train_labels_test():
-    is_kaggle = False
-    data_path = '../Data/'
-    if not os.path.exists(data_path):
-        is_kaggle = True
-        data_path = '/kaggle/input/"tabular-playground-series-apr-2022/'
+def get_train_labels_test(is_py = False):
+    data_path = 'Data/' if is_py else '../Data/'   
 
     train = pd.read_csv(data_path + "train.csv")
     labels = pd.read_csv(data_path + "train_labels.csv")
